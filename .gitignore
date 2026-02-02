@@ -1,0 +1,111 @@
+############################
+# .NET / ASP.NET Core
+############################
+bin/
+obj/
+out/
+
+############################
+# Build results
+############################
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]ny [Cc]pu/
+
+############################
+# User-specific files
+############################
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+############################
+# Visual Studio
+############################
+.vs/
+.vscode/
+
+############################
+# Rider / JetBrains
+############################
+.idea/
+*.sln.iml
+
+############################
+# Logs
+############################
+logs/
+*.log
+
+############################
+# ASP.NET Core
+############################
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.json.user
+
+############################
+# Environment files
+############################
+.env
+.env.*
+!.env.example
+
+############################
+# Secrets
+############################
+secrets.json
+*.pfx
+*.key
+*.pem
+*.cer
+
+############################
+# NuGet
+############################
+packages/
+*.nupkg
+*.snupkg
+.nuget/
+
+############################
+# Test results
+############################
+TestResults/
+*.trx
+
+############################
+# Coverage
+############################
+coverage/
+coverage.*
+*.coverage
+*.coveragexml
+
+############################
+# OS files
+############################
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+############################
+# Docker
+############################
+docker-compose.override.yml
+
+############################
+# Temporary files
+############################
+*.tmp
+*.temp
+*.bak
+*.swp
