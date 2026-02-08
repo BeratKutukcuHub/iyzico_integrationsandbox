@@ -3,6 +3,7 @@ namespace Iyzico_Stripe_Strategy.Domain
     public sealed class Order : Entity
     {
         public Guid CustomerId { get; set; }
+        public List<ProductWithQuantity> Products { get; set; } = new();
         public decimal TotalAmount { get; set; }
         public CurrencyType Currency { get; set; } = CurrencyType.TRY;
         public OrderStatus Status { get; set; } = OrderStatus.PendingPayment;

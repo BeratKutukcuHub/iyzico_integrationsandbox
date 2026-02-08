@@ -5,6 +5,7 @@ namespace Iyzico_Stripe_Strategy.UseCase.DTOs.GetDTOs
     public record OrderGetDTO(
         Guid Id,
         Guid CustomerId,
+        List<ProductWithQuantity> Products,
         decimal TotalAmount,
         CurrencyType Currency,
         OrderStatus Status,

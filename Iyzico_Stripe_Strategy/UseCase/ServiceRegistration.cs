@@ -8,6 +8,7 @@ using Iyzico_Stripe_Strategy.UseCase.Repositories.Interfaces;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 
@@ -17,9 +18,14 @@ namespace Iyzico_Stripe_Strategy.UseCase
     {
         public static IServiceCollection AddUseCase(this IServiceCollection services)
         {
+            // MongoDB Serialization ayarları
             BsonSerializer.RegisterSerializer(
-            new GuidSerializer(GuidRepresentation.Standard)
+                new GuidSerializer(GuidRepresentation.Standard)
             );
+            
+            var conventionPack = new ConventionPack { new IgnoreExtraElementsConvention(true) };
+            ConventionRegistry.Register("IgnoreExtraElements", conventionPack, type => true);
+            
             services.AddSingleton<IMongoClient>(sp => new MongoClient(
                 sp.GetRequiredService<IOptions<MongoOption>>().Value.ConnectionString));
             services.AddScoped(sp => sp.GetRequiredService<IMongoClient>().GetDatabase(

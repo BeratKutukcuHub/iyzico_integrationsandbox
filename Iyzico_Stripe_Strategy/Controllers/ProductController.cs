@@ -25,5 +25,8 @@ namespace Iyzico_Stripe_Strategy.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProduct([FromBody] ProducPostDTO product) => Ok(await _productRepository.
         AddEntityAsync(_mapper.Map<Product>(product)));
+        [HttpPost("bulk-add-products")]
+        public async Task<IActionResult> AddProducts([FromBody] List<ProducPostDTO> products) => Ok(await _productRepository.
+        BulkAddProductAsync(_mapper.Map<List<Product>>(products)));
     }
 }

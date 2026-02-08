@@ -1,6 +1,7 @@
 using Iyzico_Stripe_Strategy.Domain;
 using Iyzico_Stripe_Strategy.UseCase.Repositories.Base;
 using Iyzico_Stripe_Strategy.UseCase.Repositories.Interfaces;
+using MongoDB.Driver;
 
 namespace Iyzico_Stripe_Strategy.UseCase.Repositories
 {
@@ -8,6 +9,11 @@ namespace Iyzico_Stripe_Strategy.UseCase.Repositories
     {
         public CustomerRepository(Persistance<Customer> persistance) : base(persistance)
         {
+        }
+        public async Task<Guid> AddTransactionSuccessPaidPaymentAsync(IClientSessionHandle session, Customer entity)
+        {
+            await _persistance.Collection.InsertOneAsync(session, entity);
+            return entity.Id;
         }
     }
 }

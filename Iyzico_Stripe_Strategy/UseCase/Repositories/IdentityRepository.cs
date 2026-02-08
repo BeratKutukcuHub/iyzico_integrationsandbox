@@ -21,10 +21,12 @@ namespace Iyzico_Stripe_Strategy.UseCase.Repositories
         {
             var filt = GetFilterDefinition(x => x.Email == entity.Email);
             var result = await _persistance.Collection.Find(filt).FirstOrDefaultAsync();
-            if(PasswordHasher.VerifyPassword(entity.PasswordHash, result.PasswordHash))
+            if (PasswordHasher.VerifyPassword(entity.PasswordHash, result.PasswordHash))
             {
                 return result;
-            }return null;
+            }
+            return null;
         }
+        
     }
 }

@@ -7,5 +7,4 @@ namespace Iyzico_Stripe_Strategy.UseCase.DTOs.PostDTOs
         List<ProductWithQuantity> Products,
         decimal TotalPaidScore
     );
-
 }

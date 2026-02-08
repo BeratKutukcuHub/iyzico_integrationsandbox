@@ -17,7 +17,12 @@ namespace Iyzico_Stripe_Strategy.Middlewares
                 Username = identity.Username,
                 PhoneNumber = identity.PhoneNumber,
                 Role = role,
-                Expire = DateTime.Now.AddMinutes(15)
+                Expire = DateTime.Now.AddMinutes(15),
+                City = identity.City,
+                Country = identity.Country,
+                Email = identity.Email,
+                Name = identity.Name,
+                Surname = identity.Surname
             });
             var payloadBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(payload));
 
@@ -52,8 +57,14 @@ namespace Iyzico_Stripe_Strategy.Middlewares
             {
                 new Claim(ClaimTypes.NameIdentifier, data.Id.ToString()),
                 new Claim(ClaimTypes.Role, data.Role),
-                new Claim(ClaimTypes.Name, data.Username),
-                new Claim(ClaimTypes.MobilePhone, data.PhoneNumber)
+                new Claim("Username", data.Username),
+                new Claim(ClaimTypes.MobilePhone, data.PhoneNumber),
+                new Claim(ClaimTypes.Email, data.Email),
+                new Claim(ClaimTypes.Name, data.Name),
+                new Claim(ClaimTypes.Surname, data.Surname),
+                new Claim(ClaimTypes.Country, data.Country),
+                new Claim("City", data.City),
+
             }));
         }
     }

@@ -7,5 +7,6 @@ namespace Iyzico_Stripe_Strategy.UseCase.DTOs.GetDTOs
         Guid IdentityId,
         List<ProductWithQuantity> Products,
         decimal TotalPaidScore,
-        string Ip);
+        string Ip
+        );
 }
