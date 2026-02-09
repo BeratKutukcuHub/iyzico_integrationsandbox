@@ -36,20 +36,31 @@ namespace Iyzico_Stripe_Strategy.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Orders() => Ok(_mapper.Map<List<OrderGetDTO>>(await _orderRepository.GetEntitiesAsync()));
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Order(Guid id) => Ok(_mapper.Map<OrderGetDTO>(await _orderRepository.GetEntityAsync(id)));
         
+        [Authorize(Roles = "user")]
+        [HttpPost("status/iyzico")]
+        public async Task<IActionResult> Status([FromQuery] Guid OrderId)
+        {
+            var result = await _orderRepository.FindOneAsync(x => x.Id == OrderId);
+            return Ok(new
+            {
+                totalAmount = result.TotalAmount,
+                status = result.Status
+            });
+        }
+
         [Authorize(Roles = "user")]
         [HttpPost("request/iyzico")]
         public async Task<IActionResult> RequestIyzicoPayment([FromBody] OrderPostDTO orderDto)
         {
             var response = await _orderRepository.AddEntityAndStockReservedIfPaymentAsync(orderDto);
             CheckoutResponse? iyzicoResponse = await _iyzicoService.IyzicoRequestAsync(response!);
-            
-            if (iyzicoResponse is null) 
+            if (iyzicoResponse is null)
                 return BadRequest();
-
+                
             return Ok(iyzicoResponse);
         }
     }

@@ -1,4 +1,5 @@
 using System.Reflection;
+using Iyzico_Stripe_Strategy.Domain;
 using Iyzico_Stripe_Strategy.Options;
 using Iyzico_Stripe_Strategy.UseCase.DTOs.GetDTOs;
 using Iyzico_Stripe_Strategy.UseCase.Mappings;
@@ -18,7 +19,11 @@ namespace Iyzico_Stripe_Strategy.UseCase
     {
         public static IServiceCollection AddUseCase(this IServiceCollection services)
         {
-            // MongoDB Serialization ayarları
+            BsonSerializer.RegisterSerializer(new EnumSerializer<PaymentStatus>(BsonType.String));
+            BsonSerializer.RegisterSerializer(new EnumSerializer<CurrencyType>(BsonType.String));
+            BsonSerializer.RegisterSerializer(new EnumSerializer<ProductType>(BsonType.String));
+            BsonSerializer.RegisterSerializer(new EnumSerializer<OrderStatus>(BsonType.String));
+            BsonSerializer.RegisterSerializer(new EnumSerializer<ProductCategories>(BsonType.String));
             BsonSerializer.RegisterSerializer(
                 new GuidSerializer(GuidRepresentation.Standard)
             );

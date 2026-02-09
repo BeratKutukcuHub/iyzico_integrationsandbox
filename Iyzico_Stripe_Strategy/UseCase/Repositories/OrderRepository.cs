@@ -76,11 +76,12 @@ namespace Iyzico_Stripe_Strategy.UseCase.Repositories
                 bool parsing = Guid.TryParse(orderPaymentIyzico.BasketId, out var guid);
                 if(parsing == false) throw new Exception("BasketId not found");
                 var result = await GetEntityAsync(guid);
+                
                 var customerId = await _customerRepository.AddTransactionSuccessPaidPaymentAsync(x, new Customer
                 {
                     Products = result.Products,
                     Ip = _currentUserInformation.Infos.IpAddress!,
-                    IdentityId = _currentUserInformation.Infos.UserId,
+                    IdentityId = result.CustomerId,
                     TotalPaidScore = result.TotalAmount
                 });
                 var paymentId = await _paymentRepository.AddTransactionSuccessPaidPaymentAsync(x, new Domain.Payment

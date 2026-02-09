@@ -17,7 +17,7 @@ namespace Iyzico_Stripe_Strategy.Services
         }
         public string? IpAddress => ConnectionInfo.RemoteIpAddress!.ToString();
         public string? UserAgent => Request.Headers["User-Agent"]!;
-        public string? CorrelationId => Items["CorrelationId"]?.ToString()!;
+        public string? CorrelationId => Items["CorrelationId"]?.ToString();
         public bool? IsAuthenticated => User.Identity?.IsAuthenticated;
         public string? Role => User.FindFirstValue(ClaimTypes.Role);
         public bool IsHttps => Request.IsHttps;
@@ -29,7 +29,7 @@ namespace Iyzico_Stripe_Strategy.Services
             IsAuthenticated,
             Role,
             IsHttps,
-            UserId?? default,
+            UserId,
             User.FindFirstValue(ClaimTypes.Name),
             User.FindFirstValue(ClaimTypes.MobilePhone),
             User.FindFirstValue(ClaimTypes.Email),
@@ -45,7 +45,7 @@ namespace Iyzico_Stripe_Strategy.Services
     bool? IsAuthenticated,
     string? Role,
     bool IsHttps,
-    Guid UserId,
+    Guid? UserId,
     string? Username,
     string? PhoneNumber,
     string? Email,

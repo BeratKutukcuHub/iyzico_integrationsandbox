@@ -71,7 +71,6 @@ namespace Iyzico_Stripe_Strategy.Services
             request.BasketItems = order.BasketItemsAndTotalPrice.BasketItems;
 
             var response = await CheckoutFormInitialize.Create(request, _opt);
-
             if (response.Status != "success")
                 throw new Exception($"Iyzico checkout creation failed: {response.ErrorMessage}");
 
@@ -103,5 +102,8 @@ namespace Iyzico_Stripe_Strategy.Services
             return form;
         }
     }
+    public record RawInitializeResponse(string Status, string ConversationId, string Token, string ErrorCode,string ErrorMessage);
     public record CheckoutResponse(string OrderId, string PaymentUrl);
 }
+
+   

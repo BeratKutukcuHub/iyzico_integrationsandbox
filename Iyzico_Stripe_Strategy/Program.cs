@@ -1,4 +1,5 @@
 
+using System.Text.Json.Serialization;
 using Iyzico_Stripe_Strategy;
 using Iyzico_Stripe_Strategy.Extension;
 using Iyzico_Stripe_Strategy.Middlewares;
@@ -16,16 +17,30 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<IyzicoOption>(builder.Configuration.GetSection("IYZICO"));
 builder.Services.Configure<MongoOption>(builder.Configuration.GetSection("MONGO"));
 builder.Services.AddUseCase();
+builder.Services.AddCors(setupAction =>
+{
+    setupAction.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyHeader();
+        builder.AllowAnyMethod();
+        builder.WithOrigins("http://127.0.0.1:5500");
+        builder.AllowCredentials();
+    });
+});
 builder.Services.AddSwaggerGenAdvanced();
 builder.Services.AddScoped<CorrelationMiddleware>();
 builder.Services.AddScoped<ICurrentUserInformation, CurrentUserInformation>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IIyzicoPaymentService, IyzicoPaymentService>();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(configure=>
+{
+    configure.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 app.UseMiddleware<CorrelationMiddleware>();
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSwagger();

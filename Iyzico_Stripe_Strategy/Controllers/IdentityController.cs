@@ -37,7 +37,7 @@ namespace Iyzico_Stripe_Strategy.Controllers
             await _identityRepository.UpdateEntityAsync(id, _mapper.Map<Identity>(identity))
         );
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromQuery] LoginDTO identity)
+        public async Task<IActionResult> Login([FromBody] LoginDTO identity)
         {
             var result = await _identityRepository.Login(_mapper.Map<Identity>(identity));
             if (result is not null) return Ok(new
